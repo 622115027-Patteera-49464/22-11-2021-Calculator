@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
 
@@ -31,6 +31,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController quantity = TextEditingController();
+  TextEditingController price = TextEditingController();
+  TextEditingController result = TextEditingController();
+
+  @override
+  void initState() {
+    //
+    super.initState();
+    result.text =
+        "Buy x Pusheen the cat. Because it cost x THB, you have to pay x THB";
+  }
+
   @override
   Widget build(BuildContext context) {
 /*     return Container();
@@ -45,25 +57,49 @@ class _HomeState extends State<Home> {
               children: [
                 Image.asset(
                   "pusheen_hi.jpg",
-                  width: 350,
-                  height: 350,
+                  width: 300,
+                  height: 300,
                 ),
                 Text(
                   "Calculator Program",
                   style: TextStyle(
                       fontFamily: "Maaja",
-                      fontSize: 100,
+                      fontSize: 80,
                       color: Colors.pink,
                       decoration: TextDecoration.overline),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: "Apple Amount", border: OutlineInputBorder()),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: quantity,
+                    decoration: InputDecoration(
+                        labelText: "Pusheen The Cat Amount",
+                        border: OutlineInputBorder()),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: price,
+                    decoration: InputDecoration(
+                        labelText: "Pusheen The Cat Price",
+                        border: OutlineInputBorder()),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      var cal = double.parse(quantity.text) *
+                          double.parse(price.text);
+                      print(
+                          "Pusheen the cat quantity: ${quantity.text}, Total: ${cal} THB");
+
+                      setState(() {
+                        result.text =
+                            "Buy ${quantity.text} Pusheen the cat. Because it cost ${price.text} THB, you have to pay ${cal} THB";
+                      });
+                    },
                     child: Text("CALCULATE"),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.pink),
@@ -72,8 +108,8 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Text(
-                  "Buy a Pusheen cat. Because it cost 999,999 THB, you have to pay 999,999 THB",
-                  style: TextStyle(color: Colors.red[600]),
+                  result.text,
+                  style: TextStyle(color: Colors.green[700], fontSize: 20),
                 )
               ],
             ),
