@@ -52,21 +52,23 @@ class _HomeState extends State<Home> {
       children: [
         Center(
           child: Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
                 Image.asset(
-                  "pusheen_hi.jpg",
-                  width: 300,
-                  height: 300,
+                  "assets/images/pusheen_hi.jpg",
+                  width: 250,
+                  height: 250,
                 ),
                 Text(
                   "Calculator Program",
                   style: TextStyle(
                       fontFamily: "Maaja",
-                      fontSize: 80,
+                      fontSize: 55,
                       color: Colors.pink,
-                      decoration: TextDecoration.overline),
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.wavy
+                      ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
