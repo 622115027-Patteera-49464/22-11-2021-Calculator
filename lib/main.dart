@@ -1,5 +1,8 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps
+// ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps, prefer_const_literals_to_create_immutables
 
+import 'package:firstapp2/pages/calc.dart';
+import 'package:firstapp2/pages/contact.dart';
+import 'package:firstapp2/pages/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,113 +14,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Calculator Application"),
-          backgroundColor: Colors.pink,
-        ),
-        body: Home(),
-      ),
-    );
+    return MaterialApp(home: MainPage());
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _HomeState extends State<Home> {
-  TextEditingController quantity = TextEditingController();
-  TextEditingController price = TextEditingController();
-  TextEditingController result = TextEditingController();
-
-  @override
-  void initState() {
-    //
-    super.initState();
-    result.text =
-        "Buy x Pusheen the cat. Because it cost x THB, you have to pay x THB";
-  }
+class _MainPageState extends State<MainPage> {
+  int _currentIndex = 0;
+  final tabs = [HomePage(), CalculatePage(), ContactPage()];
 
   @override
   Widget build(BuildContext context) {
-/*     return Container();
-  } */
-
-    return ListView(
-      children: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/images/pusheen_hi.jpg",
-                  width: 250,
-                  height: 250,
-                ),
-                Text(
-                  "Calculator Program",
-                  style: TextStyle(
-                      fontFamily: "Maaja",
-                      fontSize: 55,
-                      color: Colors.pink,
-                      decoration: TextDecoration.underline,
-                      decorationStyle: TextDecorationStyle.wavy
-                      ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: quantity,
-                    decoration: InputDecoration(
-                        labelText: "Pusheen The Cat Amount",
-                        border: OutlineInputBorder()),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: price,
-                    decoration: InputDecoration(
-                        labelText: "Pusheen The Cat Price",
-                        border: OutlineInputBorder()),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      var cal = double.parse(quantity.text) *
-                          double.parse(price.text);
-                      print(
-                          "Pusheen the cat quantity: ${quantity.text}, Total: ${cal} THB");
-
-                      setState(() {
-                        result.text =
-                            "Buy ${quantity.text} Pusheen the cat. Because it cost ${price.text} THB, you have to pay ${cal} THB";
-                      });
-                    },
-                    child: Text("CALCULATE"),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.pink),
-                        padding: MaterialStateProperty.all(
-                            EdgeInsets.fromLTRB(50, 20, 50, 20))),
-                  ),
-                ),
-                Text(
-                  result.text,
-                  style: TextStyle(color: Colors.green[700], fontSize: 20),
-                )
-              ],
-            ),
-          ),
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Calculator Application",
+            style: TextStyle(fontFamily: "Maaja", fontSize: 40)),
+        backgroundColor: Colors.redAccent[400],
+      ),
+      body: tabs[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Homepage"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calculate), label: "Calculate"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.contact_mail), label: "Contact")
+        ],
+        onTap: (index) {
+          setState(() {
+            print(index);
+            _currentIndex = index;
+          });
+        },
+        backgroundColor: Color(4294763756),
+        selectedItemColor: Colors.redAccent[400],
+        unselectedItemColor: Colors.pink[200],
+      ),
     );
   }
 }
